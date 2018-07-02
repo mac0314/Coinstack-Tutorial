@@ -1,0 +1,30 @@
+<head>
+  <title>Wallet</title>
+</head>
+
+<body>
+  <h1>Wallet!</h1>
+
+  {{> loginButtons}}
+
+  <img src="{{mypic}}" />
+
+  {{#if currentUser}}
+    {{#if isDetail}} {{>walletdetail}} {{else}} {{> walletlist}} {{/if}}
+  {{/if}}
+</body>
+
+<template name="walletlist">
+  <button>Add wallet</button>
+  <br /> 
+  {{#each wallets}}
+  <div name="wallet" address="{{_id}}">
+    {{label}}: {{_id}}
+  </div>
+  {{/each}}
+</template>
+
+<template name="walletdetail">
+  <div id="qrcode"></div>
+  <div>{{address}}</div>
+</template>
