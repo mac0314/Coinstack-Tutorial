@@ -1,0 +1,32 @@
+{
+  "name": "restify-tutorial",
+  "version": "0.0.1",
+  "description": "A Restify project",
+  "author": "Youngmin Kim <rladudals02@gmail.com>",
+  "private": true,
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mac0314/Coinstack-Tutorial.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mac0314/Coinstack-Tutorial/issues"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "coinstack-sdk-js": "^1.1.19",
+    "fs": "0.0.1-security",
+    "restify": "^7.2.1",
+    "vue": "^2.5.2",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  }
+}
