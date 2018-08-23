@@ -3,6 +3,15 @@ var CoinStack = require('coinstack-sdk-js');
 var client = new CoinStack('', '', '172.16.101.132:3000', 'http'); 
 var fs = require('fs');
 
+const corsMiddleware = require('restify-cors-middleware') 
+ 
+const cors = corsMiddleware({ 
+  preflightMaxAge: 5, //Optional 
+  origins: ['http://api.myapp.com', 'http://web.myapp.com', 'http://localhost:3000'], 
+  allowHeaders: ['API-Token'], 
+  exposeHeaders: ['API-Token-Expiry'] 
+}) 
+
 var definition = fs.readFileSync('./simple_storage.lua', 'utf8');
 
 var address = "1QBSiKdw52XDDDM17fp4bohcM3NcH8Bne1";
@@ -44,6 +53,9 @@ server.use(restify.plugins.acceptParser(server.acceptable));
 server.use(restify.plugins.queryParser());
 server.use(restify.plugins.bodyParser());
 
+server.pre(cors.preflight) 
+server.use(cors.actual) 
+
 server.listen(8080, function () {
   console.log('ready on %s', server.url);
 });
@@ -59,8 +71,8 @@ server.post('/api/message', function create(req, res, next) {
 
 function saveMessage(req, res, next) {
   console.log(req.body);
-  var code = 'res, ok = call("set", "message", "' + req.body + '"); assert(ok); return res;';
-
+  var code = 'res, ok = call("set", "message", "' + req.body.message + '"); assert(ok); return res;'; 
+ 
   //console.log(code);
 
   var builder = client.createLuaContractBuilder();
@@ -107,7 +119,14 @@ function getMessage(req, response, next) {
   client.queryContract(address, "LSC", code, function (err, res) {
     console.log(err);
     console.log(res);
-    response.send(200, res);
+    
+    var resultObject = {} 
+ 
+    resultObject.result_code = 200 
+    resultObject.result_msg = "Success" 
+    resultObject.result_data = res.result 
+ 
+    response.json(resultObject) 
     next();
     return;
   });

@@ -1,4 +1,4 @@
-# Restify-Tutorial
+# Vue-Restify-Tutorial
 
 ## Restify Backend
 
